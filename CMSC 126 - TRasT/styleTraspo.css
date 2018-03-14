@@ -1,0 +1,172 @@
+body{
+	background-color: rgba(175, 209, 251, 90%);
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	font-family: 'Changa';
+}
+div.login_div{
+	margin-right: 10px;
+	text-align: right;
+	padding: 0px;
+}
+.log_in:link {
+	text-decoration: none;
+    color: #063e83;
+}
+.log_in:hover {
+	text-decoration: none;	
+    color: 	blue;
+}
+#login{
+	padding: 0px;
+	font-size: 13px;
+}
+
+div.top{
+	background-color: rgba(6, 62, 131, 55%);
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+img.logo{
+	width: 120px;
+	height: 39px;
+	margin: 0px;
+	margin-top: 10px;
+	margin-left: 5px;
+	vertical-align: text-top;
+}
+#title{
+	margin-top: 5px;
+	vertical-align: text-top;
+	font-size: 33px;
+	color: #252626;
+	font-weight: normal;
+}
+
+div.body{
+	width: 85%;
+	height: 70%;
+	margin: 0px;
+	margin-left: 120px;
+}
+
+#road_situation{
+	vertical-align: top;
+	padding: 0px;
+	font-size: 20px;
+}
+#map{
+	vertical-align: top;
+	margin-left: 30px;
+	width:90%;
+	height:300px;
+	background:green; 
+	border: 2px solid black;"
+}
+div.buttons{
+	vertical-align: top;
+	margin: 0px;
+	margin-right: 78px;
+	float: right;
+	
+ }
+.feed{
+	background-color: rgba(6, 62, 131, 90%);
+    color: black;
+    margin: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 2px solid #e7e7e7;
+    font-family: 'Changa';
+    border-radius: 5px;
+}
+ .feed:hover{
+ 	background-color: blue;
+    color: black;
+    border: 2px solid #e7e7e7;
+    font-weight: bold;
+    border-radius: 5px;
+ }
+
+#notice{
+	vertical-align: top;
+	padding: 0px;
+	font-size: 20px;
+}
+
+
+------------------------------------------login page
+div.center_body{
+	height: 100%;
+	width: 50%;
+	
+}
+#login_word{
+	margin: 0px;
+	margin-top: 70px;
+	padding: 0px;
+	font-size: 20px;
+}
+#id_form{
+	margin: 0px;
+	margin-right: 580px;
+	font-size: 17px;
+}
+
+.username{
+	margin: 0px;
+	margin-left: 10px;
+	text-indent: 10px;
+	font-size: 14px;
+	padding: 3px;
+	background-color: white;
+}
+.submit{
+	margin: 0px;
+	margin-right: 70px;
+	font-size: 14px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: rgba(10, 62, 110, 50%);
+	border-radius: 4px;
+}
+#name{
+	color: gray;
+	font-size: 13px;
+	font-style: italic;
+}
+
+----------------------------------feedback
+div.center_body2{
+	margin: 0px;
+	padding: 100%;
+}
+
+#feed_word{
+	margin: 0px;
+	margin-left: 150px;
+	margin-top: 30px;
+	padding: 0px;
+	font-size: 20px;
+}
+
+
+-----------------------------------report
+div.center_body3{
+	margin: 0px;
+	padding: 100%;
+}
+
+#report_word{
+	margin: 0px;
+	margin-left: 150px;
+	margin-top: 30px;
+	padding: 0px;
+	font-size: 20px;
+}
+
+
