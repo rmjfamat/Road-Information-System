@@ -23,11 +23,13 @@
 		<script>
 		function myMap() {
 		var mapOptions = {
-		    center: new google.maps.LatLng(10.3338, 123.8941),
-		    zoom: 10,
+		    center: new google.maps.LatLng(10.3000, 123.8951),
+		    zoom: 15,
 		    mapTypeId: google.maps.MapTypeId.HYBRID
-		}
+		}	
 		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+		var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
 		}
 		</script>
 
