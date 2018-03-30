@@ -1,0 +1,16 @@
+.vertical-offset-100{
+    padding-top: 70px;
+}
+
+.panel-heading{
+	text-align: center;
+}
+
+.btn{
+	background-color: rgba(6, 62, 131, 55%);
+	border-style: none;
+}
+
+.panel-body{
+	height: 350px;
+}
