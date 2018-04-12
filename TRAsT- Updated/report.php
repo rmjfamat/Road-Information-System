@@ -48,13 +48,13 @@
 				    	<form accept-charset="UTF-8" role="form">
 	                    <fieldset>
 	                    	<div class="form-group">
-	    		    		    <input class="form-control" placeholder="Location" name="location" type="text">
+	    		    		    <input id="location" class="form-control" placeholder="Location" name="location" type="text">
 				    		</div>
 				    		<div class="form-group">
-	    		    		    <input class="form-control" placeholder="Time" name="time" type="text">
+	    		    		    <input id="time" class="form-control" placeholder="Time" name="time" type="text">
 				    		</div>
 	                        <div class="form-group">
-	                            <select class="form-control" name="report_type">
+	                            <select id="type" class="form-control" name="report_type">
 	                              <option>Type of Report</option>
 	                              <option>Road Repair</option>
 	                              <option>Accident</option>
@@ -63,19 +63,18 @@
 	                            </select>
 				    		</div>
 				    		<div class="form-group">
-	                            <select class="form-control" name="reporter">
+	                            <select id="reporter" class="form-control" name="reporter">
 	                              <option>Reporter</option>
 	                              <option>Traffic Enforcer</option>
-	                              <option>Nitizen</option>
+	                              <option>Netizen</option>
 	                              <option>Police Officer</option>
 	                              <option>Others</option>
 	                            </select>
 				    		</div>
 	                        <div class="form-group">
-	    		    		    <input class="form-control" placeholder="Report Details" name="details" type="text">
+	    		    		    <input id="details" class="form-control" placeholder="Report Details" name="details" type="text">
 				    		</div>
-	            
-				    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Send Report">
+				    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Send Report" onclick="saveReport()">
 				    	</fieldset>
 				      	</form>
 				    </div>
@@ -83,6 +82,35 @@
 			</div>
 		</div>
 	</div>
+	<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+	<script type="text/javascript">
+		function saveReport() {
+			var loc = document.getElementById("location").value;
+			var tim = document.getElementById("time").value;
+			var rep = document.getElementById("reporter").value;
+			var typ = document.getElementById("type").value;
+			var det = document.getElementById("details").value;
+			if (loc == "") {
+				// do error checking, not only for loc but also others
+			}
+			var report = {loc, tim, rep, typ, det};
+			var rootRef = firebase.database().ref();
+			var ref = rootRef.child('reports').push(report);
+			console.log("Pushed daw");
+		}
+	</script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyATDbbwKjHhLtxNW_6_8fqKR-OJoiCuoao",
+        authDomain: "trast-1520491910556.firebaseapp.com",
+        databaseURL: "https://trast-1520491910556.firebaseio.com",
+        projectId: "trast-1520491910556",
+        storageBucket: "trast-1520491910556.appspot.com",
+        messagingSenderId: "541291450311"
+      };
+      firebase.initializeApp(config);
+    </script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
