@@ -42,18 +42,21 @@
 			
 			<div id="map"></div>
 
-				<script>
+			<script>
 				function myMap() {
-				var mapOptions = {
-				    center: new google.maps.LatLng(10.3338, 123.8941),
-				    zoom: 10,
-				    mapTypeId: google.maps.MapTypeId.HYBRID
-				}
+					var mapOptions = {
+				    	center: new google.maps.LatLng(10.3000, 123.8951),
+				    	zoom: 15,
+					    mapTypeId: google.maps.MapTypeId.HYBRID,
+					    disableDefaultUI: true
+					}	
 				var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-				}
-				</script>
+				var trafficLayer = new google.maps.TrafficLayer();
+	   		    trafficLayer.setMap(map);
+	   			}
+			</script>
 
-				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGKa5UD5RrSnbKy-aathS0BhlZK-T3UPI&callback=myMap" type="text/javascript"></script>
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGKa5UD5RrSnbKy-aathS0BhlZK-T3UPI&callback=myMap" type="text/javascript"></script>
 		</div>
 		<div class = "row">
 			<button type = "button" id = "btn1" class = "btn btn-primary" onclick = "myFunction1()">Send Report</button>
