@@ -77,6 +77,33 @@
 		<div class = "row">
 			<h2>Public Notice</h2>
 		</div>
+		<div class = "container-fluid">
+		<section id="marquee">
+         	<p id="clockbox" class="clock"></p>
+	         <div class="notice">
+         		<marquee class="text">
+         			<h3 id="marq">
+		           <?php
+
+		              $f = fopen("notice.txt", "r");
+
+		              // read line by line
+		              while(!feof($f)) {
+		                echo fgets($f);
+		                if (!feof($f)) {
+		                  echo " • ";
+		                }
+		              }
+
+		              fclose($f);
+
+		            ?>
+		            <h3>
+         		</marquee>
+         		
+         	</div>
+      		</section>
+      		</div>
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
