@@ -47,12 +47,12 @@
 				    	<form accept-charset="UTF-8" role="form">
 	                    <fieldset>
 	                    	<div class="form-group">
-	    		    		    <input class="form-control" placeholder="Location" name="location" type="text">
+	    		    		    <input id="location" class="form-control" placeholder="Location" name="location" type="text">
 				    		</div>
 				    		<div class="form-group">
-	    		    		    <textarea name="message" class="feedback-input" id="comment" placeholder="Your Feedback"></textarea>
+	    		    		    <textarea id= "message" name="message" class="feedback-input" id="comment" placeholder="Your Feedback"></textarea>
 				    		</div>
-    						<input class="btn btn-lg btn-success btn-block" type="submit" value="Send Feedback">
+    						<input class="btn btn-lg btn-success btn-block"  value="Send Feedback" onclick="saveFeedback()">
 				    	</fieldset>
 				      	</form>
 				    </div>
@@ -60,6 +60,32 @@
 			</div>
 		</div>
 	</div>
+	<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+	<script type="text/javascript">
+		function saveFeedback() {
+			var loc = document.getElementById("location").value;
+			var mes = document.getElementById("message").value;
+			if (loc == "") {
+				// do error checking, not only for loc but also others
+			}
+			var report = {loc, mes};
+			var rootRef = firebase.database().ref();
+			var ref = rootRef.child('feedbacks').push(report);
+			console.log("Pushed daw and feedback.");
+		}
+	</script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyATDbbwKjHhLtxNW_6_8fqKR-OJoiCuoao",
+        authDomain: "trast-1520491910556.firebaseapp.com",
+        databaseURL: "https://trast-1520491910556.firebaseio.com",
+        projectId: "trast-1520491910556",
+        storageBucket: "trast-1520491910556.appspot.com",
+        messagingSenderId: "541291450311"
+      };
+      firebase.initializeApp(config);
+    </script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
