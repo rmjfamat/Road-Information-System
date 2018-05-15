@@ -95,6 +95,11 @@ if (user) {
 				var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 				var trafficLayer = new google.maps.TrafficLayer();
 	   		    trafficLayer.setMap(map);
+	   		     google.maps.event.addListener(map, 'click', function(event) {
+    alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
+    var lat = event.latLng.lat();   // latitude
+    var long = event.latLng.lng();   // longitude
+  });
 	   			}
 			</script>
 
