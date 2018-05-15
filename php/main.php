@@ -85,6 +85,8 @@ if (user) {
 			<div id="map"></div>
 
 			<script>
+				var geocoder;
+
 				function myMap() {
 					var mapOptions = {
 				    	center: new google.maps.LatLng(10.3000, 123.8951),
@@ -99,20 +101,38 @@ if (user) {
     alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
     var lat = event.latLng.lat();   // latitude
     var long = event.latLng.lng();   // longitude
+    // enable buttons
+    document.getElementById("btn1").disabled = false;
+    document.getElementById("btn2").disabled = false;
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(lat, long);
+				  geocoder.geocode({
+				    'latLng': latlng
+				  }, function (results, status) {
+				    if (status === google.maps.GeocoderStatus.OK) {
+				      if (results[1]) {
+				        console.log(results[1]);
+				      } else {
+				        alert('No results found');
+				      }
+				    } else {
+				      alert('Geocoder failed due to: ' + status);
+				    }
+				  });
   });
+				  
 	   			}
 			</script>
-
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGKa5UD5RrSnbKy-aathS0BhlZK-T3UPI&callback=myMap" type="text/javascript"></script>
 		</div>
 		<div class = "row">
-			<button type = "button" id = "btn1" class = "btn btn-primary" onclick = "myFunction1()">Send Report</button>
+			<button type = "button" id = "btn1" class = "btn btn-primary" onclick = "myFunction1()" disabled="true">Send Report</button>
 			<script>
 				function myFunction1() {
 			    	window.open("report.php");
 				}
 			</script>
-			<button type = "button" id = "btn2" class = "btn btn-primary" onclick = "myFunction2()">Send Feedback</button>
+			<button type = "button" id = "btn2" class = "btn btn-primary" onclick = "myFunction2()" disabled="true">Send Feedback</button>
 			<script>
 				function myFunction2() {
 			    	window.open("feedback.php");
