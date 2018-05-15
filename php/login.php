@@ -57,7 +57,7 @@
 				 
 				  
 				  <input id="email"  class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
-				  <input id="password" class="form-control" name="Password" placeholder="Password" required=""/>
+				  <input id="password" class="form-control" name="Password" type="Password" placeholder="Password" required=""/>
 				  <input class="btn btn-lg btn-primary btn-block" value="Login" onclick="log()"/>  			
 			</form>			
 		</div>
@@ -74,6 +74,7 @@
   console.log("YEY");
   // ...
 });
+			window.location.href="admin-main.php";  // must go to the admin UI
 		}
 	</script>
 	<script type="text/javascript">
