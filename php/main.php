@@ -173,11 +173,14 @@ if (user) {
          	</div>
       		</section>
       		</div>
-      		<div class = "modal" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="row vertical-offset-100">
+      		<div class = "modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="row vertical-offset-100" role="document">
 			    	<div class="col-md-4 col-md-offset-4">
 			    		<div class="panel panel-default">
 						  	<div class="panel-heading">
+						  		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						    		<span aria-hidden="true">&times;</span>
+                				</button>
 						    	<h3 class="panel-title">Send your Feedback!</h3>
 						 	</div>
 						  	<div class="panel-body">
@@ -197,11 +200,14 @@ if (user) {
 					</div>
 				</div>
 			</div>
-			<div class = "modal" id="modalSubscriptionForm2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class = "modal fade" id="modalSubscriptionForm2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			    <div class="row vertical-offset-100">
 			    	<div class="col-md-4 col-md-offset-4">
 			    		<div class="panel panel-default">
 						  	<div class="panel-heading">
+						  		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						    		<span aria-hidden="true">&times;</span>
+                				</button>
 						    	<h3 class="panel-title">Send your Report!</h3>
 						 	</div>
 						  	<div class="panel-body">
