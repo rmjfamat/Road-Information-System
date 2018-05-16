@@ -14,6 +14,7 @@
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
     <script>
       // Initialize Firebase
+      var locationStr;
       var config = {
         apiKey: "AIzaSyATDbbwKjHhLtxNW_6_8fqKR-OJoiCuoao",
         authDomain: "trast-1520491910556.firebaseapp.com",
@@ -102,8 +103,8 @@ if (user) {
     var lat = event.latLng.lat();   // latitude
     var long = event.latLng.lng();   // longitude
     // enable buttons
-    document.getElementById("btn1").disabled = false;
-    document.getElementById("btn2").disabled = false;
+    document.getElementById("btnSendFeedback").disabled = false;
+    document.getElementById("btnSendReport").disabled = false;
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat, long);
 				  geocoder.geocode({
@@ -111,7 +112,10 @@ if (user) {
 				  }, function (results, status) {
 				    if (status === google.maps.GeocoderStatus.OK) {
 				      if (results[1]) {
-				        console.log(results[1]);
+				        console.log(results[0].formatted_address);
+				        locationStr = results[0].formatted_address;
+				        document.getElementById("location").value = locationStr;
+				        document.getElementById("location2").value = locationStr;
 				      } else {
 				        alert('No results found');
 				      }
@@ -126,20 +130,18 @@ if (user) {
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGKa5UD5RrSnbKy-aathS0BhlZK-T3UPI&callback=myMap" type="text/javascript"></script>
 		</div>
 		<div class = "row">
-			<button type = "button" id = "btn1" class = "btn btn-primary" onclick = "myFunction1()" disabled="true">Send Report</button>
+			<button type = "button" id = "btnSendReport" class = "btn btn-primary" data-toggle="modal" data-target="#modalSubscriptionForm2" disabled="true" >Send Report</button>
 			<script>
 				function myFunction1() {
 			    	window.open("report.php");
 				}
 			</script>
-			<button type = "button" id = "btn2" class = "btn btn-primary" onclick = "myFunction2()" disabled="true">Send Feedback</button>
+			<button type = "button" id = "btnSendFeedback" class = "btn btn-primary" data-toggle="modal" data-target="#modalSubscriptionForm" disabled="true">Send Feedback</button>
 			<script>
 				function myFunction2() {
 			    	window.open("feedback.php");
 				}
 			</script>
-
-
 		</div>
 		<div class = "row">
 			<h2>Public Notice</h2>
@@ -171,12 +173,137 @@ if (user) {
          	</div>
       		</section>
       		</div>
+      		<div class = "modal" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="row vertical-offset-100">
+			    	<div class="col-md-4 col-md-offset-4">
+			    		<div class="panel panel-default">
+						  	<div class="panel-heading">
+						    	<h3 class="panel-title">Send your Feedback!</h3>
+						 	</div>
+						  	<div class="panel-body">
+						    	<form accept-charset="UTF-8" role="form">
+				                    <fieldset>
+				                    	<div class="form-group">
+				    		    		    <input id="location" class="form-control" placeholder="Location" name="location" type="text">
+							    		</div>
+							    		<div class="form-group">
+				    		    		    <textarea id= "message" name="message" class="feedback-input" id="comment" placeholder="Your Feedback" style="width:100%;"></textarea>
+							    		</div>
+			    						<input class="btn btn-lg btn-success btn-block"  value="Send Feedback" onclick="saveFeedback()">
+							    	</fieldset>
+						      	</form>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class = "modal" id="modalSubscriptionForm2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div class="row vertical-offset-100">
+			    	<div class="col-md-4 col-md-offset-4">
+			    		<div class="panel panel-default">
+						  	<div class="panel-heading">
+						    	<h3 class="panel-title">Send your Report!</h3>
+						 	</div>
+						  	<div class="panel-body">
+						    	<form accept-charset="UTF-8" role="form">
+			                    <fieldset>
+			                    	<div class="form-group">
+			    		    		    <input id="location2" class="form-control" placeholder="Location" name="location2" type="text" oninput="setColor('location', '#FFFFFF')">
+						    		</div>
+						    		<div class="form-group">
+			    		    		    <input id="time" class="form-control" placeholder="Time" name="time" type="text" oninput="setColor('time', '#FFFFFF')">
+						    		</div>
+			                        <div class="form-group">
+			                            <select id="type" class="form-control" name="report_type" oninput="setColor('type', '#FFFFFF')">
+			                              <option>Type of Report</option>
+			                              <option>Road Repair</option>
+			                              <option>Accident</option>
+			                              <option>Heavy Traffic</option>
+			                              <option>Others</option>
+			                            </select>
+						    		</div>
+						    		<div class="form-group">
+			                            <select id="reporter" class="form-control" name="reporter" oninput="setColor('reporter', '#FFFFFF')">
+			                              <option>Reporter</option>
+			                              <option>Traffic Enforcer</option>
+			                              <option>Netizen</option>
+			                              <option>Police Officer</option>
+			                              <option>Others</option>
+			                            </select>
+						    		</div>
+			                        <div class="form-group">
+			    		    		    <input id="details" class="form-control" placeholder="Report Details" name="details" type="text" oninput="setColor('details', '#FFFFFF')">
+						    		</div>
+						    		<input class="btn btn-lg btn-success btn-block" value="Send Report" onclick="saveReport()">
+						    	</fieldset>
+						      	</form>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 	<script type="text/javascript">
-		function login() {
-			// do something
+		function saveFeedback() {
+			var loc = document.getElementById("location").value;
+			var mes = document.getElementById("message").value;
+			if (loc == "") {
+				// do error checking, not only for loc but also others
+			}
+			var report = {loc, mes};
+			var rootRef = firebase.database().ref();
+			var ref = rootRef.child('feedbacks').push(report);
+			console.log("Pushed daw and feedback.");
+			document.getElementById("btnSendFeedback").disabled = true;
+			document.getElementById("btnSendReport").disabled = true;
+		}
+
+		function saveReport() {
+			var loc = document.getElementById("location").value;
+			var tim = document.getElementById("time").value;
+			var rep = document.getElementById("reporter").value;
+			var typ = document.getElementById("type").value;
+			var det = document.getElementById("details").value;
+			var acceptable = true;
+			if (loc == "") {
+				setColor('location', '#FF0000');
+				acceptable = false;
+			}
+			if (tim == "") {
+				setColor('time', '#FF0000');
+				acceptable = false;
+			}
+			if (rep == "Reporter") {
+				setColor('reporter', '#FF0000');
+				acceptable = false;
+			}
+			if (typ == "Type of Report") {
+				setColor('type', '#FF0000');
+				acceptable = false;
+			}
+			if (acceptable) {
+				var report = {loc, tim, rep, typ, det};
+				var rootRef = firebase.database().ref();
+				var ref = rootRef.child('reports').push(report);
+				console.log("Pushed daw");
+				document.getElementById("btnSendFeedback").disabled = true;
+				document.getElementById("btnSendReport").disabled = true;
+			}
 		}
 	</script>
+	<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+	<script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyATDbbwKjHhLtxNW_6_8fqKR-OJoiCuoao",
+        authDomain: "trast-1520491910556.firebaseapp.com",
+        databaseURL: "https://trast-1520491910556.firebaseio.com",
+        projectId: "trast-1520491910556",
+        storageBucket: "trast-1520491910556.appspot.com",
+        messagingSenderId: "541291450311"
+      };
+      firebase.initializeApp(config);
+    </script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
