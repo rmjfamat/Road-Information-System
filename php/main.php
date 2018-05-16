@@ -81,8 +81,7 @@ if (user) {
 			<h1>Road Situation</h1>
 		</div>
 		<div class = "row">
-			<input class = "search" type="text" placeholder="Search location..">
-			
+			<input id="mapInput" class = "search" type="text" placeholder="Search location ...">
 			<div id="map"></div>
 
 			<script>
@@ -96,6 +95,63 @@ if (user) {
 					    disableDefaultUI: true
 					}	
 				var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+				var input = document.getElementById("mapInput");
+       			var searchBox = new google.maps.places.SearchBox(input);
+        		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+			    // Bias the SearchBox results towards current map's viewport.
+			    map.addListener('bounds_changed', function() {
+			      searchBox.setBounds(map.getBounds());
+			    });
+
+			    var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
 				var trafficLayer = new google.maps.TrafficLayer();
 	   		    trafficLayer.setMap(map);
 	   		     google.maps.event.addListener(map, 'click', function(event) {
@@ -103,8 +159,8 @@ if (user) {
     var lat = event.latLng.lat();   // latitude
     var long = event.latLng.lng();   // longitude
     // enable buttons
-    document.getElementById("btnSendFeedback").disabled = false;
-    document.getElementById("btnSendReport").disabled = false;
+    document.getElementById("btn2").disabled = false;
+    document.getElementById("btn1").disabled = false;
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(lat, long);
 				  geocoder.geocode({
@@ -123,20 +179,19 @@ if (user) {
 				      alert('Geocoder failed due to: ' + status);
 				    }
 				  });
-  });
-				  
+  });			  
 	   			}
 			</script>
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGKa5UD5RrSnbKy-aathS0BhlZK-T3UPI&callback=myMap" type="text/javascript"></script>
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGKa5UD5RrSnbKy-aathS0BhlZK-T3UPI&callback=myMap&libraries=places" type="text/javascript"></script>
 		</div>
 		<div class = "row">
-			<button type = "button" id = "btnSendReport" class = "btn btn-primary" data-toggle="modal" data-target="#modalSubscriptionForm2" disabled="true" >Send Report</button>
+			<button type = "button" id = "btn1" class = "btn btn-primary" data-toggle="modal" data-target="#modalSubscriptionForm2" disabled="true" >Send Report</button>
 			<script>
 				function myFunction1() {
 			    	window.open("report.php");
 				}
 			</script>
-			<button type = "button" id = "btnSendFeedback" class = "btn btn-primary" data-toggle="modal" data-target="#modalSubscriptionForm" disabled="true">Send Feedback</button>
+			<button type = "button" id = "btn2" class = "btn btn-primary" data-toggle="modal" data-target="#modalSubscriptionForm" disabled="true">Send Feedback</button>
 			<script>
 				function myFunction2() {
 			    	window.open("feedback.php");
@@ -260,8 +315,8 @@ if (user) {
 			var rootRef = firebase.database().ref();
 			var ref = rootRef.child('feedbacks').push(report);
 			console.log("Pushed daw and feedback.");
-			document.getElementById("btnSendFeedback").disabled = true;
-			document.getElementById("btnSendReport").disabled = true;
+			document.getElementById("btn2").disabled = true;
+			document.getElementById("btn1").disabled = true;
 		}
 
 		function saveReport() {
@@ -292,8 +347,8 @@ if (user) {
 				var rootRef = firebase.database().ref();
 				var ref = rootRef.child('reports').push(report);
 				console.log("Pushed daw");
-				document.getElementById("btnSendFeedback").disabled = true;
-				document.getElementById("btnSendReport").disabled = true;
+				document.getElementById("btn2").disabled = true;
+				document.getElementById("btn1").disabled = true;
 			}
 		}
 	</script>
