@@ -222,7 +222,7 @@ if (user) {
     		}
 			</script>
 		</div>
-		<div class="container">
+		<div class="container2">
 	            <table id="table" class="display nowrap uk-table uk-table-hover uk-table-striped" width="100%">
 	                <thead>
 	                		<tr>
