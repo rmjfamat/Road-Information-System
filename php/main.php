@@ -8,7 +8,10 @@
   	<script src="scripts/jquery-3.2.1.min.js"></script>
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<link rel="stylesheet" type="text/css" href="css/sample.css">
+  	<script src="scripts/jquery-3.1.1.min.js"></script>
+    <script src="scripts/jquery.dataTables.min.js"></script>
   	<link href='https://fonts.googleapis.com/css?family=Changa' rel='stylesheet'>
+  	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
   	
 </head>
 <body>
@@ -219,6 +222,19 @@ if (user) {
     		}
 			</script>
 		</div>
+		<div class="container">
+	            <table id="table" class="display nowrap uk-table uk-table-hover uk-table-striped" width="100%">
+	                <thead>
+	                		<tr>
+	                      		<th class="type">Type</th>
+	                          	<th class="detail">Details</th>
+	                          	<th class="location">Location</th>
+	                      	</tr>
+	                </thead>
+	                <tbody id="output">
+	                </tbody>
+	            </table>
+    	</div>
 		<div class = "row">
 			<h2>Public Notice</h2>
 		</div>
@@ -326,6 +342,49 @@ if (user) {
 			</div>
 
 	<script type="text/javascript">
+		let table;
+
+		$(document).ready(function() {
+		    table = $('#table').DataTable();
+		    updateFeedback();
+		    updateReport();
+		});
+
+		function updateFeedback(){
+    		let rootRef = firebase.database().ref().child("feedbacks");
+        	rootRef.on("child_added", snap => {
+	            let data = [];
+	            data.push(snap.child("mes").val());//0
+	            data.push(snap.child("loc").val());//1
+	            addFeedback(data);
+	       });
+		}
+
+		function updateReport(){
+    		let rootRef = firebase.database().ref().child("reports");
+        	rootRef.on("child_added", snap => {
+            	let data = [];
+	            data.push(snap.child("det").val());//0
+	            data.push(snap.child("loc").val());//1
+	            data.push(snap.child("rep").val());//2
+	            data.push(snap.child("tim").val());//3
+	            data.push(snap.child("typ").val());//4
+	            addReport(data);
+	       });
+		}
+
+		function addFeedback(data){ // Add new row to table
+		    var currentPage = table.page();
+		    const btn = "<button class='dt-deleteF' style='margin-right:5px;border-radius:10px'> <img src='images/rubbish-bin.png'></button>";
+		    table.row.add(["Feedback", data[0], data[1]]).draw();
+		}
+
+		function addReport(data){ // Add new row to table
+		    var currentPage = table.page();
+		    const btn = "<button class='dt-deleteR' style='margin-right:5px;border-radius:10px;'> <img src='images/rubbish-bin.png'></button>";
+		    table.row.add(["Report", data[0] + " at " + data[3] + " as reported by " + data[2] + " with a report type of " + data[4], data[1],]).draw();
+		}
+
 		function saveFeedback() {
 			var loc = document.getElementById("location").value;
 			var mes = document.getElementById("message").value;
@@ -388,7 +447,6 @@ if (user) {
       };
       firebase.initializeApp(config);
     </script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
