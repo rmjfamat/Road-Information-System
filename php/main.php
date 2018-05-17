@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<script src="scripts/jquery-3.2.1.min.js"></script>
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<link rel="stylesheet" type="text/css" href="css/sample.css">
   	<link href='https://fonts.googleapis.com/css?family=Changa' rel='stylesheet'>
@@ -155,9 +156,14 @@ if (user) {
 				var trafficLayer = new google.maps.TrafficLayer();
 	   		    trafficLayer.setMap(map);
 	   		     google.maps.event.addListener(map, 'click', function(event) {
-    alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
     var lat = event.latLng.lat();   // latitude
     var long = event.latLng.lng();   // longitude
+    const dest = {lat: lat,lng: long};
+	var marker = new google.maps.Marker({
+      position: dest,
+      map: map
+    });
+
     // enable buttons
     document.getElementById("btn2").disabled = false;
     document.getElementById("btn1").disabled = false;
@@ -181,6 +187,16 @@ if (user) {
 				  });
   });			  
 	   			}
+
+	   			function clearMarkers() {
+        			setMapOnAll(null);
+      			}
+
+      			function setMapOnAll(map) {
+        			for (var i = 0; i < markers.length; i++) {
+          			markers[i].setMap(map);
+        			}
+      			}
 			</script>
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGKa5UD5RrSnbKy-aathS0BhlZK-T3UPI&callback=myMap&libraries=places" type="text/javascript"></script>
 		</div>
@@ -196,6 +212,11 @@ if (user) {
 				function myFunction2() {
 			    	window.open("feedback.php");
 				}
+
+				function setColor(obj, color) {
+    			var property = document.getElementById(obj);
+        		property.style.backgroundColor = color;
+    		}
 			</script>
 		</div>
 		<div class = "row">
@@ -228,7 +249,7 @@ if (user) {
          	</div>
       		</section>
       		</div>
-      		<div class = "modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      		<div class = "modal" id="modalSubscriptionForm" aria-hidden="true">
 				<div class="row vertical-offset-100" role="document">
 			    	<div class="col-md-4 col-md-offset-4">
 			    		<div class="panel panel-default">
@@ -247,7 +268,7 @@ if (user) {
 							    		<div class="form-group">
 				    		    		    <textarea id= "message" name="message" class="feedback-input" id="comment" placeholder="Your Feedback" style="width:100%;"></textarea>
 							    		</div>
-			    						<input class="btn btn-lg btn-success btn-block"  value="Send Feedback" onclick="saveFeedback()">
+			    						<input class="btn btn-lg btn-success btn-block" data-dismiss="modal" value="Send Feedback" onclick="saveFeedback()">
 							    	</fieldset>
 						      	</form>
 						    </div>
@@ -295,7 +316,7 @@ if (user) {
 			                        <div class="form-group">
 			    		    		    <input id="details" class="form-control" placeholder="Report Details" name="details" type="text" oninput="setColor('details', '#FFFFFF')">
 						    		</div>
-						    		<input class="btn btn-lg btn-success btn-block" value="Send Report" onclick="saveReport()">
+						    		<input class="btn btn-lg btn-success btn-block" data-dismiss="modal" value="Send Report" onclick="saveReport()">
 						    	</fieldset>
 						      	</form>
 						    </div>
@@ -317,6 +338,7 @@ if (user) {
 			console.log("Pushed daw and feedback.");
 			document.getElementById("btn2").disabled = true;
 			document.getElementById("btn1").disabled = true;
+			var modal = document.getElementById('modalSubscriptionForm');
 		}
 
 		function saveReport() {
@@ -349,6 +371,7 @@ if (user) {
 				console.log("Pushed daw");
 				document.getElementById("btn2").disabled = true;
 				document.getElementById("btn1").disabled = true;
+				var modal = document.getElementById('modalSubscriptionForm2');
 			}
 		}
 	</script>

@@ -74,7 +74,7 @@
   console.log("YEY");
   // ...
 });
-			window.location.href="admin-main.php";  // must go to the admin UI
+			window.location.href="admin-feedbacks.php";  // must go to the admin UI
 		}
 	</script>
 	<script type="text/javascript">
