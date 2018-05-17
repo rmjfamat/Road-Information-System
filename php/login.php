@@ -74,7 +74,6 @@
   console.log("YEY");
   // ...
 });
-			window.location.href="admin-feedbacks.php";  // must go to the admin UI
 		}
 	</script>
 	<script type="text/javascript">
@@ -89,6 +88,7 @@
 	    var uid = user.uid;
 	    var providerData = user.providerData;
 	    // ...
+	    window.location.href="admin-feedbacks.php";  // must go to the admin UI
 	  console.log(displayName + " is name");
 
 	  } else {

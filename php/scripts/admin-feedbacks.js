@@ -73,6 +73,26 @@ function addReport(data){ // Add new row to table
     table.row.add([data[5], "Report", data[0] + " at " + data[3] + " as reported by " + data[2] + " with a report type of " + data[4], data[1], btn]).draw();
 }
 
+function logOut(){ //Log out user
+    firebase.auth().signOut().then(function() {
+        console.log("Sign out successful!");
+    }).catch(function(error) {
+        console.log("Error signing out:")
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorMessage);
+        console.log(error);
+    });
+}
+
+firebase.auth().onAuthStateChanged(user => {
+  console.log("Auth state changed")
+  if(user){
+  } else {
+    window.location = 'login.php';
+  }
+});
+
 $('#table tbody').on( 'click', '.dt-deleteF', function () {
     var dtRow = table.row( $(this).parents('tr') );
     var data = table.row( $(this).parents('tr') ).data();

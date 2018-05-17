@@ -33,7 +33,8 @@
 			<div class  = "navbar-collapse collapse">
 				<ul class = "nav navbar-nav navbar-right">
 					<li><a href="main.php">Home</a></li>
-					<li class = "active"><a href="admin-main.php">View Reports and Feedbacks</a></li>
+					<li class = "active"><a href="admin-feedbacks.php">View Reports and Feedbacks</a></li>
+					<li><a onClick="logOut()">Logout</a></li>
 				</ul>
 			</div>
 		</div>
